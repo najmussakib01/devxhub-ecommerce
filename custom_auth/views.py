@@ -84,7 +84,7 @@ class UserLoginView(LoginView):
 from django.views.decorators.csrf import csrf_protect
 from django.utils.decorators import method_decorator
 from django.contrib.auth import logout as auth_logout
-from cart.carts import Cart
+# from cart.carts import Cart
 import copy
 class UserLogoutView(View):
     next_page = reverse_lazy(settings.LOGIN_REDIRECT_URL)
