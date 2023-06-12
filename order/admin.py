@@ -6,15 +6,14 @@ from .models import (Order, OrderItem)
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('user', 'order_item', 'total_amount', 'paid', 'transaction_id', 'status', 'created_at')
+    list_display = ('user', 'total_amount', 'paid', 'transaction_id', 'status', 'created_at')
     search_fields = ('transaction_id', 'order_items')
 
     def save_model(self, request, obj, form, change):
         obj.updated_by = request.user
         obj.save()
     
-    def order_item(self, instance):
-        return instance.order_items.product.title
+    
     
     def export_as_csv(self, request, queryset):
         meta = self.model._meta

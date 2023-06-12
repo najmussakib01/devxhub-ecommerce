@@ -42,4 +42,4 @@ class Order(models.Model):
         ordering = ['-created_at']
 
     def __str__(self):
-        return self.first_name + ' ' + self.last_name
+        return self.user.first_name + ' ' + self.user.last_name

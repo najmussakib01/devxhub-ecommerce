@@ -97,8 +97,7 @@
                             <h5 class="font-weight-bold">Total</h5>
                             <h5 class="font-weight-bold">${{ cart.grand_total|floatformat:"2" }}</h5>
                         </div>
-                        <a href="#" class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</a>
-                        {% comment %} <a href="{% url 'checkout' %}" class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</a> {% endcomment %}
+                        <a href="{% url 'checkout' %}" class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</a>
                     </div>
                 </div>
             </div>
