@@ -39,9 +39,8 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     <div class="navbar-nav mr-auto py-0">
-                        {% comment %} <a href="{% url 'home' %}" class="nav-item nav-link active">Home</a>
+                        <a href="{% url 'home' %}" class="nav-item nav-link active">Home</a>
                         <a href="{% url 'product_list' %}" class="nav-item nav-link">Shop</a>
-                        <a href="{% url 'contact_us_create' %}" class="nav-item nav-link">Contact</a> {% endcomment %}
                     </div>
                     <div class="navbar-nav ml-auto py-0">
                         {% if request.user.is_authenticated %}

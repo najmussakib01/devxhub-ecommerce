@@ -18,17 +18,30 @@
                     <h5 class="font-weight-semi-bold mb-4">Filter by Category</h5>
                     <form>
                         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" checked id="price-all">
+                            <input type="checkbox" class="custom-control-input" checked id="color-all">
                             <label class="custom-control-label" for="price-all">All Category</label>
-                            <span class="badge border font-weight-normal">{{ all_product_count }}</span>
+                            <span class="badge border font-weight-normal">1000</span>
                         </div>
-                        {% for item in categories %}
                         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" name="category" value="{{ item.title }}" class="custom-control-input" id="{{item.id}}">
-                            <label class="custom-control-label" for="{{item.id}}">{{ item.title|title }}</label>
-                            <span class="badge border font-weight-normal">{{ item.product_count }}</span>
+                            <input type="checkbox" class="custom-control-input" id="color-1">
+                            <label class="custom-control-label" for="color-1">T-Shirt</label>
+                            <span class="badge border font-weight-normal">150</span>
                         </div>
-                        {% endfor %}
+                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                            <input type="checkbox" class="custom-control-input" id="color-2">
+                            <label class="custom-control-label" for="color-2">Shirt</label>
+                            <span class="badge border font-weight-normal">295</span>
+                        </div>
+                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                            <input type="checkbox" class="custom-control-input" id="color-3">
+                            <label class="custom-control-label" for="color-3">Jercey</label>
+                            <span class="badge border font-weight-normal">246</span>
+                        </div>
+                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                            <input type="checkbox" class="custom-control-input" id="color-4">
+                            <label class="custom-control-label" for="color-4">Denim</label>
+                            <span class="badge border font-weight-normal">145</span>
+                        </div>
                     </form>
                 </div>
                 <!-- Price End -->
@@ -138,13 +151,13 @@
                             </div>
                         </div>
                     </div>
-                    {% comment %} {% for item in items %}
+                    {% for item in items %}
                     <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
                         {% include 'eshop/product_card.html' %}
                     </div>
                     {% endfor %}
                     <span>Showing {{items.count}} entries</span>
-                    {% include 'eshop/paginator.html' with items=page_obj %} {% endcomment %}
+                    {% include 'eshop/paginator.html' with items=page_obj %}
                     
                 </div>
             </div>

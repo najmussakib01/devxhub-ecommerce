@@ -12,8 +12,10 @@ urlpatterns = [
     path('login/', UserLoginView.as_view(), name='user_login'),
     path('logout/', UserLogoutView.as_view(), name='user_logout'),
     path('password-change/', UserPasswordChangeView.as_view(), name='user_password_change'),
-
+    # User Profile usls.
     path('user-profile/', include('user_profile.urls')),
+    # Products Urls
+    path('products/', include('product.urls')),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
