@@ -12,8 +12,10 @@ from django.contrib.auth.views import (LoginView, LogoutView, PasswordChangeView
 from django.contrib.auth import (login as auth_login)
 from .log_entry import CustomLogEntry
 from .mixin import CommonMixin
+from user_profile.models import UserProfile
 from django.contrib.auth import get_user_model
 User = get_user_model()
+
 
 # Create your views here.
 class HomeView(generic.TemplateView):
@@ -36,6 +38,7 @@ class SignUpCreateView(generic.CreateView):
         self.object = form.save(commit=False)
         with transaction.atomic():
             self.object.save()
+            self.create_user_profile(user=self.object)
         messages.success(self.request, self.success_message)
         return HttpResponseRedirect(self.get_default_redirect_url())
 
@@ -52,6 +55,13 @@ class SignUpCreateView(generic.CreateView):
         context = super().get_context_data(**kwargs)
         context['title'] = self.title
         return context
+    
+    def create_user_profile(self, *args, **kwargs):
+        user_obj = kwargs['user']
+        try:
+            UserProfile.objects.create(user=user_obj)
+        except Exception as e:
+            pass
     
 
 class UserLoginView(LoginView):

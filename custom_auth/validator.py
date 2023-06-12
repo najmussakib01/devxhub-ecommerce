@@ -49,7 +49,7 @@ class MyValidator():
 def image_validator(value): # add this to some file where you can import it from
     limit = 2 * 1024 * 1024
     ext = os.path.splitext(value.name)[1]  # [0] returns path+filename
-    valid_extensions = ['.jpeg', '.jpg', '.png', '.gif']
+    valid_extensions = ['.jpeg', '.jpg', '.png']
     if value.size > limit:
         raise ValidationError('File too large. Size should not exceed 2 MiB.')
     if not ext.lower() in valid_extensions:
