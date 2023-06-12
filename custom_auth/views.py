@@ -16,6 +16,15 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 # Create your views here.
+class HomeView(generic.TemplateView):
+    template_name = 'eshop/index.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['site'] = 'ecommerce'
+        return context
+
+
 class SignUpCreateView(generic.CreateView):
     model = User
     form_class = SignUpForm
@@ -89,11 +98,11 @@ import copy
 class UserLogoutView(View):
     next_page = reverse_lazy(settings.LOGIN_REDIRECT_URL)
     def get(self, request, *args, **kwargs):
-        cart = Cart(self.request)
-        current_cart = copy.deepcopy(cart.cart)
-        current_coupon = copy.deepcopy(cart.coupon)
+        # cart = Cart(self.request)
+        # current_cart = copy.deepcopy(cart.cart)
+        # current_coupon = copy.deepcopy(cart.coupon)
         auth_logout(request)
-        cart.restore_after_logout(current_cart, current_coupon)
+        # cart.restore_after_logout(current_cart, current_coupon)
         return HttpResponseRedirect(self.next_page)
 
 

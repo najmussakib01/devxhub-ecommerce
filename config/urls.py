@@ -2,10 +2,11 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 from django.urls import path
-from custom_auth.views import (SignUpCreateView, UserLoginView, UserLogoutView, UserPasswordChangeView)
+from custom_auth.views import (SignUpCreateView, UserLoginView, UserLogoutView, UserPasswordChangeView, HomeView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', HomeView.as_view(), name='home'),
     # Authentication urls.
     path('signup/', SignUpCreateView.as_view(), name='user_signup'),
     path('login/', UserLoginView.as_view(), name='user_login'),

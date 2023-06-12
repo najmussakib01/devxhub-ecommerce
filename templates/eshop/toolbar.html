@@ -1,7 +1,7 @@
 {% load static %}
 <!-- Topbar Start -->
 <div class="container-fluid">
-    {% include 'accounts/messages.html' %}
+    {% include 'custom-auth/messages.html' %}
     <div class="row align-items-center py-3 px-xl-5">
         <div class="col-lg-3 d-none d-lg-block">
             <a href="" class="text-decoration-none">
@@ -25,10 +25,10 @@
                 <i class="fas fa-heart text-primary"></i>
                 <span class="badge">0</span>
             </a>
-            <a href="{% url 'shoping_cart' %}" class="btn border">
+            {% comment %} <a href="{% url 'shoping_cart' %}" class="btn border">
                 <i class="fas fa-shopping-cart text-primary"></i>
                 <span class="badge">{{ cart|length }}</span>
-            </a>
+            </a> {% endcomment %}
         </div>
     </div>
 </div>
