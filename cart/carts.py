@@ -1,6 +1,7 @@
 from django.conf import settings 
-from eshop.models import Product
+from product.models import Product
 from .models import Coupon
+
 
 class Cart(object):
     def __init__(self, request):
@@ -37,9 +38,8 @@ class Cart(object):
             cart[str(item.id)]['product'] = {
                 "id": item.id,
                 "title": item.title,
-                "category": item.category.title,
                 "price": float(item.price),
-                "thumbnail": item.thumbnail,
+                "thumbnail": f'/media/{item.thumbnail}',
                 "slug": item.slug,
             }
             yield cart[str(item.id)]

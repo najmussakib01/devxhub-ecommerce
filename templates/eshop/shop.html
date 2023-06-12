@@ -156,10 +156,11 @@
                         {% include 'eshop/product_card.html' %}
                     </div>
                     {% endfor %}
-                    <span>Showing {{items.count}} entries</span>
-                    {% include 'eshop/paginator.html' with items=page_obj %}
+                    
                     
                 </div>
+                <span>Showing {{items.count}} entries</span>
+                {% include 'eshop/paginator.html' with items=page_obj %}
             </div>
             <!-- Shop Product End -->
         </div>

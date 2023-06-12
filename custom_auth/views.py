@@ -10,10 +10,13 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth.views import (LoginView, LogoutView, PasswordChangeView)
 from django.contrib.auth import (login as auth_login)
+from django.contrib.auth import logout as auth_logout
+from django.contrib.auth import get_user_model
+import copy
 from .log_entry import CustomLogEntry
 from .mixin import CommonMixin
 from user_profile.models import UserProfile
-from django.contrib.auth import get_user_model
+from cart.carts import Cart
 User = get_user_model()
 
 
@@ -100,19 +103,15 @@ class UserLoginView(LoginView):
         context['title'] = self.title
         return context
 
-from django.views.decorators.csrf import csrf_protect
-from django.utils.decorators import method_decorator
-from django.contrib.auth import logout as auth_logout
-# from cart.carts import Cart
-import copy
+
 class UserLogoutView(View):
     next_page = reverse_lazy(settings.LOGIN_REDIRECT_URL)
     def get(self, request, *args, **kwargs):
-        # cart = Cart(self.request)
-        # current_cart = copy.deepcopy(cart.cart)
-        # current_coupon = copy.deepcopy(cart.coupon)
+        cart = Cart(self.request)
+        current_cart = copy.deepcopy(cart.cart)
+        current_coupon = copy.deepcopy(cart.coupon)
         auth_logout(request)
-        # cart.restore_after_logout(current_cart, current_coupon)
+        cart.restore_after_logout(current_cart, current_coupon)
         return HttpResponseRedirect(self.next_page)
 
 
