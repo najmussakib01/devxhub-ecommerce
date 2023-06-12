@@ -59,7 +59,7 @@ class SignUpCreateView(generic.CreateView):
     def create_user_profile(self, *args, **kwargs):
         user_obj = kwargs['user']
         try:
-            UserProfile.objects.create(user=user_obj)
+            UserProfile.objects.create(user=user_obj, created_by=user_obj)
         except Exception as e:
             pass
     

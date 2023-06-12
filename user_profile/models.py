@@ -19,8 +19,14 @@ class UserProfile(models.Model):
     postal_code = models.CharField(max_length=10, blank=True, null=True)
     country = models.CharField(max_length=50, blank=True, null=True)
     billing_address = models.TextField(max_length=100, blank=True, null=True)
-    profile_picture = models.ImageField(upload_to='profile_pictures/', validators=[image_validator], blank=True, null=True)
+    profile_picture = models.ImageField(upload_to='profile_pictures/', validators=[image_validator], blank=True, null=True, help_text='Must be .jpeg .jpg .png Format and Size should not exceed 2 MiB.')
 
+
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
+    updated_at = models.DateTimeField(auto_now=True, editable=False)
+    created_by = models.ForeignKey(User, on_delete=models.PROTECT, related_name='created_%(class)ss')
+    updated_by = models.ForeignKey(User, on_delete=models.PROTECT,  related_name='updated_%(class)ss', null=True, blank=True)
+    
     def __str__(self):
         return self.user.username
 

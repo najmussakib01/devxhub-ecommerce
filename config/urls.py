@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
-from django.urls import path
+from django.urls import path, include
 from custom_auth.views import (SignUpCreateView, UserLoginView, UserLogoutView, UserPasswordChangeView, HomeView)
 
 urlpatterns = [
@@ -12,6 +12,8 @@ urlpatterns = [
     path('login/', UserLoginView.as_view(), name='user_login'),
     path('logout/', UserLogoutView.as_view(), name='user_logout'),
     path('password-change/', UserPasswordChangeView.as_view(), name='user_password_change'),
+
+    path('user-profile/', include('user_profile.urls')),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
