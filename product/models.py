@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from custom_auth.validator import image_validator
+from django.utils.html import format_html
 User = get_user_model()
 
 # Create your models here.
@@ -31,3 +32,6 @@ class Product(BaseModel):
     
     def __str__(self):
         return self.title
+    
+    def product_image(self):
+        return format_html('<img src="/media/{}" width = "50" height = "50"/>', self.thumbnail)
