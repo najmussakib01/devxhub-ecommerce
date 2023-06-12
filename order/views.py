@@ -25,13 +25,15 @@ class CheckoutView(generic.View):
         street = self.request.user.userprofile.street
         city = self.request.user.userprofile.city
         address = self.request.user.userprofile.billing_address
+        phone_no = self.request.user.userprofile.phone_number
         form = self.form_class(initial={
                     'first_name': first_name,
                     'last_name': last_name,
                     'email': email,
                     'street': street,
                     'city': city,
-                    'address': address
+                    'address': address,
+                    'phone_no': phone_no,
                 })
         context = {
             'form': form,
@@ -42,7 +44,6 @@ class CheckoutView(generic.View):
 
     def post(self, *args, **kwargs):
         form = self.form_class(self.request.POST)
-        print(self.request.POST, '--------------post data-------------')
         if form.is_valid():
             cart = Cart(self.request)
             coupon_id = cart.coupon
@@ -57,6 +58,10 @@ class CheckoutView(generic.View):
                     quantity = user_cart[str(product.id)]['quantity'],
                 )
                 ordered_products.append(order_item)
+                # update product stock.
+                product.stock -= user_cart[str(product.id)]['quantity']
+                product.save()
+
             order = Order.objects.create(
                 user = self.request.user,
                 transaction_id = uuid.uuid4().hex,
