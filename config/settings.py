@@ -19,7 +19,6 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
 DEFAULTS_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -139,3 +138,8 @@ MESSAGE_TAGS = {
 SESSION_COOKIE_AGE = 8640
 CART_ID = 'cart'
 COUPON_ID = 'coupon'
+
+# paypal credential
+SECURE_CROSS_ORIGIN_OPENER_POLICY='same-origin-allow-popups'
+PAYPAL_CLIENT_ID = 'ATN8ye9zM_wlyM3NQrSTsxOIV1hKtbd0s6TFe_EN9m8RWpKtvJ2nhzXViLxxDUoG8SlAyxkkFHlm_8x-'
+PAYPAL_SECRET_ID = 'EFhIGDEXouIckZTxMK341ejVGXRZpMkVFqcXo-j50GsLqi1rxcTEnGNl8Ye7Hy9PO_jfQE9H3qdZwP2R'

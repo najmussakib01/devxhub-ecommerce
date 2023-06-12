@@ -45,36 +45,6 @@ class CheckoutView(generic.View):
     def post(self, *args, **kwargs):
         form = self.form_class(self.request.POST)
         if form.is_valid():
-            cart = Cart(self.request)
-            coupon_id = cart.coupon
-            user_cart = Cart(self.request).cart
-            products = Product.objects.filter(id__in=list(user_cart))
-            ordered_products = []
-
-            for product in products:
-                order_item = OrderItem.objects.create(
-                    product = product,
-                    price = product.price,
-                    quantity = user_cart[str(product.id)]['quantity'],
-                )
-                ordered_products.append(order_item)
-                # update product stock.
-                product.stock -= user_cart[str(product.id)]['quantity']
-                product.save()
-
-            order = Order.objects.create(
-                user = self.request.user,
-                transaction_id = uuid.uuid4().hex,
-                status = StatusOptions.RECEIVED,
-                total_amount = cart.grand_total(),
-            )
-            if coupon_id:
-                order.coupon = Coupon.objects.get(id=coupon_id)
-
-            order.order_items.add(*ordered_products)
-            order.save()
-            cart.clear()
-            messages.success(self.request, "Order added successfully")
             return JsonResponse({
                 'success': True,
                 'errors': None
@@ -84,3 +54,47 @@ class CheckoutView(generic.View):
                 'success': False,
                 'errors': dict(form.errors)
             })
+
+
+class SaveOrderData(generic.View):
+    def post(self, *args, **kwargs):
+        data = json.loads(self.request.body)
+        cart = Cart(self.request)
+        coupon_id = cart.coupon
+        user_cart = Cart(self.request).cart
+        products = Product.objects.filter(id__in=list(user_cart))
+        ordered_products = []
+
+        for product in products:
+            order_item = OrderItem.objects.create(
+                product = product,
+                price = product.price,
+                quantity = user_cart[str(product.id)]['quantity'],
+            )
+            ordered_products.append(order_item)
+            # update product stock.
+            product.stock -= user_cart[str(product.id)]['quantity']
+            product.save()
+
+        order = Order.objects.create(
+            user = self.request.user,
+            transaction_id = uuid.uuid4().hex,
+            status = StatusOptions.RECEIVED,
+            paypal_transaction_id = data['paypal_transaction_id'],
+            total_amount = cart.grand_total(),
+            paid_amount = data['amount'],
+        )
+        if coupon_id:
+            order.coupon = Coupon.objects.get(id=coupon_id)
+
+        order.order_items.add(*ordered_products)
+        print(cart.grand_total(), float(data['amount']))
+        if float('%.2f' % cart.grand_total()) != float(data['amount']):
+            order.paid= False
+            order.save()
+        order.save()
+        cart.clear()
+        return JsonResponse({
+            'success': True,
+            'errors': None
+        })
