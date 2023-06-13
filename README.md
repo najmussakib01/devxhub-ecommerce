@@ -1,11 +1,3 @@
-# devxhub-ecommerce
-admin user = admin
-pass: Admin123
-
-paypal user = monirulslm7@outlook.com
-pass: Monir@786
-
-
 ## Table of contents
 * [General info](#general-info)
 * [Project Structure](#project-structure)
