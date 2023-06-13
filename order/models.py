@@ -29,6 +29,8 @@ class Order(models.Model):
     user = models.ForeignKey(User, related_name='orders', on_delete = models.CASCADE)
     order_items = models.ManyToManyField(OrderItem)
     coupon = models.ForeignKey(Coupon, null=True, blank=True, on_delete=models.SET_NULL)
+    discount_amount = models.DecimalField(max_digits=8, decimal_places=2)
+    shipping_charge = models.DecimalField(max_digits=8, decimal_places=2)
     total_amount = models.DecimalField(max_digits=8, decimal_places=2)
     paid = models.BooleanField(default=True)
     transaction_id = models.UUIDField()

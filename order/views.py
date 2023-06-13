@@ -6,11 +6,23 @@ from django.http import JsonResponse
 from django.contrib import messages
 from django.views.generic.edit import FormMixin
 from django.views.generic import FormView
+from django.db.models import Q
 from .forms import CheckoutForm
 from cart.carts import Cart
 from cart.models import Coupon
 from .models import OrderItem, Order, StatusOptions
 from product.models import Product
+
+def format_search_string(fields, keyword):
+    Qr = None
+    for field in fields:        
+        q = Q(**{"%s__icontains" % field: keyword })
+        if Qr:
+            Qr = Qr | q
+        else:
+            Qr = q    
+    return Qr
+
 
 # Create your views here.
 class CheckoutView(generic.View):
@@ -98,3 +110,43 @@ class SaveOrderData(generic.View):
             'success': True,
             'errors': None
         })
+
+
+class OrderListView(generic.ListView):
+    permission_required = 'product.view_product'
+    model = Order
+    context_object_name = 'items'
+    paginate_by = 10
+    template_name = 'eshop/order_list.html'
+    queryset = Order.objects.all()
+    search_fields = ['transaction_id',]
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(Q(user=self.request.user))
+        # product search start from here.
+        query_param = self.request.GET.copy()
+        search_param = query_param.get('query', None)
+        if search_param:
+            Qr = format_search_string(self.search_fields, search_param)
+            queryset = queryset.filter(Qr)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['order_count'] = self.get_queryset().count()
+        return context
+
+
+class OrderDetailView(generic.DetailView):
+    model = Order
+    context_object_name = 'instance'
+    pk_url_kwarg = 'pk'
+    template_name = 'eshop/order_detail.html'
+    title = "Payment Invoice"
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = self.title
+        return context
