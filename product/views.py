@@ -77,7 +77,7 @@ class ProductDetailView(generic.DetailView):
 class ProductListApiView(ListAPIView):
     permission_classes = [IsAuthenticated,]
     serializer_class = ProductSerializer
-    queryset= Product.objects.filter()
+    queryset= Product.objects.all()
     
     def get_queryset(self):
         queryset = super().get_queryset()
