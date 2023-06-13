@@ -8,6 +8,7 @@ pass: Monir@786
 
 ## Table of contents
 * [General info](#general-info)
+* [Project Structure](#project-structure)
 * [Technologies](#technologies)
 * [Setup](#setup)
 * [project details](#project-details)
