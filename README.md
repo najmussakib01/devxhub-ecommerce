@@ -13,6 +13,7 @@ and make purchases. Implement an API to expose the platform's functionality to o
 	
 
 ## Project Structure
+```
 .
 ├── ...
 ├── devxhub-ecommerce       # Project Root Directory
@@ -26,7 +27,7 @@ and make purchases. Implement an API to expose the platform's functionality to o
 |   ├── user_profile        # User Information app. such as: shipping address, phone no etc.
 │   └── ...                 
 └── ...
-
+```
 
 ## Technologies
 Project is created with:
