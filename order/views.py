@@ -80,7 +80,7 @@ class SaveOrderData(generic.View):
         for product in products:
             order_item = OrderItem.objects.create(
                 product = product,
-                price = product.price,
+                price = user_cart[str(product.id)]['sub_total'],
                 quantity = user_cart[str(product.id)]['quantity'],
             )
             ordered_products.append(order_item)
@@ -90,6 +90,8 @@ class SaveOrderData(generic.View):
 
         order = Order.objects.create(
             user = self.request.user,
+            discount_amount = round(cart.get_discount_amount(), 2),
+            shipping_charge = round(user_cart[str(product.id)]['shipping'], 2),
             transaction_id = uuid.uuid4().hex,
             status = StatusOptions.RECEIVED,
             paypal_transaction_id = data['paypal_transaction_id'],
@@ -100,7 +102,6 @@ class SaveOrderData(generic.View):
             order.coupon = Coupon.objects.get(id=coupon_id)
 
         order.order_items.add(*ordered_products)
-        print(cart.grand_total(), float(data['amount']))
         if float('%.2f' % cart.grand_total()) != float(data['amount']):
             order.paid= False
             order.save()

@@ -66,12 +66,16 @@
                         {% if instance.coupon %}
                         <tr>
                             <td class="text-right" colspan="4"> Discount {{ instance.coupon.discount }} % </td>
-                            <td>{{ instance.total_amount }}</td>
+                            <td>${{ instance.discount_amount }}</td>
                         </tr>
                         {% endif %}
                         <tr>
+                            <td class="text-right" colspan="4"> Shipping </td>
+                            <td>${{ instance.shipping_charge }}</td>
+                        </tr>
+                        <tr>
                             <td class="text-right" colspan="4"> Grand Total </td>
-                            <td>{{ instance.total_amount }}</td>
+                            <td>${{ instance.total_amount }}</td>
                         </tr>
                     </tbody>
                 </table>

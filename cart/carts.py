@@ -19,6 +19,7 @@ class Cart(object):
         updated_quantity = self.session[self.cart_id][str(product_id)]['quantity'] + quantity
         self.session[self.cart_id][str(product_id)]['quantity'] = updated_quantity
         self.session[self.cart_id][str(product_id)]['sub_total'] = updated_quantity * float(product.price)
+        self.session[self.cart_id][str(product_id)]['shipping'] = 10
 
         if updated_quantity < 1:
             del self.session[self.cart_id][str(product_id)]
@@ -87,3 +88,12 @@ class Cart(object):
             if self.actual_total() > coupon.required_amount_use_coupon:
                 amount -= amount * (coupon.discount / 100)
         return amount + shipping
+    
+    def get_discount_amount(self):
+        amount = sum(product['sub_total'] for product in self.cart.values())
+        shipping = 10
+        if self.coupon:
+            coupon = Coupon.objects.get(id=self.coupon)
+            if self.actual_total() > coupon.required_amount_use_coupon:
+                discount = amount * (coupon.discount / 100)
+        return discount
