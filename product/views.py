@@ -72,3 +72,13 @@ class ProductDetailView(generic.DetailView):
         context['product_count'] = self.get_queryset().count()
         context['basic_template'] = ""
         return context
+
+
+class ProductListApiView(ListAPIView):
+    permission_classes = [IsAuthenticated,]
+    serializer_class = ProductSerializer
+    queryset= Product.objects.filter()
+    
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset
