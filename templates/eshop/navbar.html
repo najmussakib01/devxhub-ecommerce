@@ -48,7 +48,9 @@
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ request.user.get_short_name }}</a>
                             <div class="dropdown-menu rounded-0 m-0">
                                 <a href="{% url 'order_list' %}" class="nav-item nav-link">Orders</a>
+                                {% if request.user.userprofile %}
                                 <a href="{% url 'user_profile_update' request.user.userprofile.pk %}" class="nav-item nav-link">Update Profile</a>
+                                {%endif%}
                                 <a href="{% url 'user_password_change' %}" class="nav-item nav-link">Change Password</a>
                                 <a href="{% url 'user_logout' %}" class="nav-item nav-link">Logout</a>
                             </div>

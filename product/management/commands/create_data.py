@@ -18,7 +18,7 @@ def create_product():
         # Access the response data
         items = response.json()
         for item in items:
-            obj = Product(title=item['title'], slug=slugify(item['title']), price=item['price'], description=item['description'], stock=50, created_by_id=3)
+            obj = Product(title=item['title'], slug=slugify(item['title']), price=item['price'], description=item['description'], stock=50, created_by_id=1)
             obj.save()
             count += 1
         
