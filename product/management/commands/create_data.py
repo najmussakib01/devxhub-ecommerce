@@ -22,7 +22,7 @@ def create_product():
             obj.save()
             count += 1
         
-        print(f'{count} items successfully Saved to Product List.')
+        print(f'{count} items successfully Saved to Product List without Image. Add image manually')
     else:
         # Handle the error or unexpected response
         print(f"Error: {response.status_code}")
