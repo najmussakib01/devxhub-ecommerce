@@ -1,7 +1,8 @@
 import os
 from pathlib import Path
 from django.contrib.messages import constants as messages
-
+from dotenv import load_dotenv
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -63,6 +64,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'config.wsgi.application'
+
 
 
 DATABASES = {
@@ -137,7 +139,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static', 'static_root')
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static', 'static_dirs'),
     )
-
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static', 'media')
 MEDIA_URL = 'media/'
 
