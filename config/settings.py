@@ -15,7 +15,7 @@ SECRET_KEY = 'django-insecure-_5+dva-tcjynr2l#w^bx5rx&agkwly%s=9i$jn8+uu*5^xfmnq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -69,7 +69,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-""" 
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -79,18 +79,18 @@ DATABASES = {
 """
 
 # DATAB BASE CREDENTIALS.
-DB_NAME = 'e_shoper'
-DB_USER = 'postgres'
-DB_PASS = 'Ksy12345'
-DB_HOST = '127.0.0.1'
+POSTGRES_DB = 'e_shoper'
+POSTGRES_USER = 'postgres'
+POSTGRES_PASSWORD = 'Ksy12345'
+DB_HOST = 'db'
 DB_PORT = '5432'
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': DB_NAME,
-        'USER': DB_USER,
-        'PASSWORD': DB_PASS,
+        'NAME': os.getenv('POSTGRES_DB'),
+        'USER': os.getenv('POSTGRES_USER'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
         'HOST': DB_HOST,
         'PORT': DB_PORT,
     }
