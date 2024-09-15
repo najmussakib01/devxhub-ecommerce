@@ -13,9 +13,13 @@ services:
       - db
       - redis
     environment:
-      - POSTGRES_DB=e_shoper
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=Ksy12345
+      - DEBUG=0
+      - SECRET_KEY=django-insecure-_5+dva-tcjynr2l#w^bx5rx&agkwly%s=9i$jn8+uu*5^xfmnq
+      - DJANGO_ALLOWED_HOSTS=192.168.71.131
+      - SQL_ENGINE=django.db.backends.postgresql
+      - SQL_DATABASE=e_shoper
+      - SQL_USER=postgres
+      - SQL_PASSWORD=Ksy12345
       - REDIS_URL=redis://redis:6379/0
       - DJANGO_SUPERUSER_USERNAME=admin
       - DJANGO_SUPERUSER_EMAIL=admin@django.com
@@ -28,9 +32,9 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:
-      - POSTGRES_DB=e_shoper
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=Ksy12345
+      - SQL_DATABASE=e_shoper
+      - SQL_USER=postgres
+      - SQL_PASSWORD=Ksy12345
   nginx:
     image: nginx:latest
     ports:
