@@ -2,8 +2,7 @@ version: '3.9'
 
 services:
   web:
-    build: .
-      #command: python manage.py runserver 0.0.0.0:8000
+    build: . #command: python manage.py runserver 0.0.0.0:8000
     command: gunicorn --workers 3 --bind 0.0.0.0:8000 config.wsgi:application
     volumes:
       - .:/app
@@ -14,10 +13,19 @@ services:
       - db
       - redis
     environment:
-      - POSTGRES_DB=e_shoper
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=Ksy12345
+      - DEBUG=1
+      - SECRET_KEY=django-insecure-_5+dva-tcjynr2l#w^bx5rx&agkwly%s=9i$jn8+uu*5^xfmnq
+      - DJANGO_ALLOWED_HOSTS=192.168.71.131
+      - SQL_ENGINE=django.db.backends.postgresql
+      - SQL_DATABASE=e_shoper
+      - SQL_USER=postgres
+      - SQL_PASSWORD=Ksy12345
+      - SQL_HOST=db
+      - SQL_PORT=5432
       - REDIS_URL=redis://redis:6379/0
+      - DJANGO_SUPERUSER_USERNAME=admin
+      - DJANGO_SUPERUSER_EMAIL=admin@django.com
+      - DJANGO_SUPERUSER_PASSWORD=admin12345
     env_file:
       - .env
 
@@ -26,16 +34,16 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:
-      - POSTGRES_DB=e_shoper
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=Ksy12345
+      - SQL_DATABASE=e_shoper
+      - SQL_USER=postgres
+      - SQL_PASSWORD=Ksy12345
   nginx:
     image: nginx:latest
     ports:
       - "80:80"
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf  # Mount custom nginx.conf
-      - static_volume:/app/static  # Volume for static files
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf # Mount custom nginx.conf
+      - static_volume:/app/static # Volume for static files
     depends_on:
       - web
   redis:
