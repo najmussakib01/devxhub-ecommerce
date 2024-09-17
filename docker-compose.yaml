@@ -1,6 +1,15 @@
 version: '3.9'
 
 services:
+  db:
+    image: postgres:13
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=e_shoper
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Ksy12345
+
   web:
     build: . #command: python manage.py runserver 0.0.0.0:8000
     command: gunicorn --workers 3 --bind 0.0.0.0:8000 config.wsgi:application
@@ -15,14 +24,6 @@ services:
     env_file:
       - .env
 
-  db:
-    image: postgres:13
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
-    environment:
-      - SQL_DATABASE=e_shoper
-      - SQL_USER=postgres
-      - SQL_PASSWORD=Ksy12345
   nginx:
     image: nginx:latest
     ports:
@@ -32,6 +33,7 @@ services:
       - static_volume:/app/static # Volume for static files
     depends_on:
       - web
+
   redis:
     image: redis:latest
     ports:
