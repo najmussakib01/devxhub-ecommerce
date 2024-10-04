@@ -60,7 +60,11 @@ pipeline {
                 }
             }
         }
-
+        stage('Approval') {
+            steps {
+                input "Do you approve this build?"
+            }
+        }
         stage('Deploy to Server') {
             steps {
                 script {
