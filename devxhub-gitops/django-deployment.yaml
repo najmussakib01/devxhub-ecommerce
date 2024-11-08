@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: django-deployment
-  namespace: default
+  namespace: devxhub
 spec:
   replicas: 1
   selector:
@@ -58,7 +58,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: django-service
-  namespace: default
+  namespace: devxhub
 spec:
   type: ClusterIP
   selector:
