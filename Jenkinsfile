@@ -101,7 +101,7 @@ EOF
         success {
             echo 'UAT deployment successful!'
             mail to: 'iqbalkhan319@gmail.com',
-                 from: 'buprojecttime@brac.net',
+                 from: 'buprojecttime@gmail.com',
                  subject: "UAT Pipeline Success: ${currentBuild.fullDisplayName}",
                  body: "UAT deployment successful for build ${env.BUILD_NUMBER}.\nView console output at ${env.BUILD_URL}"
         }
@@ -110,7 +110,7 @@ EOF
             echo 'UAT deployment failed!'
             emailext attachLog: true,  // Attach the build log to the email
                     to: 'iqbalkhan319@gmail.com',
-                    from: 'buprojecttime@brac.net',
+                    from: 'buprojecttime@gmail.com',
                     subject: "UAT Pipeline Failure: ${currentBuild.fullDisplayName}",
                     body: "UAT deployment failed for build ${env.BUILD_NUMBER}.\nView console output at ${env.BUILD_URL}"
         }
